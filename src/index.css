@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+
+
+
+  
+@media (prefers-color-scheme: light) {
+  body {
+    color: #393f44;
+    background:whitesmoke;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    color: white;
+    background:#171d23;
+  }
+}
+
+
+
+
+
+
+/* Style for NProgress loader */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: rgb(0, 145, 255);
+  position: fixed;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  z-index: 1031; /* Ensure it's above other content but below navbar */
+}
+
+#nprogress .peg {
+  display: none;
+}
