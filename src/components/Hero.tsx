@@ -91,7 +91,7 @@ const Hero = () => {
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-100 dark:bg-blue-900/20 rounded-full blur-3xl"></div>
       </div>
 
-      <div className="relative min-h-screen flex items-center justify-center p-8">
+      <div className="relative min-h-screen flex items-center justify-center p-4">
         <div className="bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl rounded-3xl p-8 md:p-12 w-full max-w-4xl shadow-xl">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             {/* Left Column - Image and Name */}
@@ -118,11 +118,7 @@ const Hero = () => {
                   {/* Gaurisankar Tarasia */}
                   GAURISANKAR TARASIA
                 </h1>
-                {/* <div className="mt-2 inline-block px-4 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/50 dark:to-purple-900/50">
-                  <p className="text-gray-700 dark:text-gray-300 font-medium">
-                    Tech Enthusiast
-                  </p>
-                </div> */}
+                
               </div>
             </div>
 

@@ -7,11 +7,11 @@ import Knowledge from './pages/knowledge.tsx'
 import Projects from './pages/projects.tsx'
 import './App.css'
 
+
 function App() {
 
   return (
     <>
-   
      <BrowserRouter>
      <ThemeProvider>
     <Navbar/>
@@ -25,7 +25,6 @@ function App() {
     </Routes>
     </ThemeProvider>
     </BrowserRouter>
-    
      </>
   )
 }
