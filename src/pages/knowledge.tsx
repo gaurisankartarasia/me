@@ -157,18 +157,25 @@
 
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { Code2, FileCode2, Boxes, Terminal, Laptop, FileJson, GitBranch, TerminalIcon as Terminal2 } from "lucide-react"
+import { GitBranch } from "lucide-react"
+import { RiJavascriptLine, RiReactjsLine, RiNodejsLine, RiNextjsLine, RiCss3Line } from "react-icons/ri";
+import { TbBrandTypescript } from "react-icons/tb";
+import { FaLinux } from "react-icons/fa";
+
+
+
+
 
 export default function Knowledge() {
   const skills = [
-    { icon: FileCode2, name: "JavaScript", color: "text-[#8B4513]" },
-    { icon: Code2, name: "TypeScript", color: "text-[#8B4513]" },
-    { icon: Boxes, name: "React", color: "text-[#8B4513]" },
-    { icon: Terminal, name: "NodeJS", color: "text-[#8B4513]" },
-    { icon: Laptop, name: "Next.js", color: "text-[#8B4513]" },
-    { icon: FileJson, name: "CSS3", color: "text-[#8B4513]" },
+    { icon: RiJavascriptLine, name: "JavaScript", color: "text-[#8B4513]" },
+    { icon: TbBrandTypescript, name: "TypeScript", color: "text-[#8B4513]" },
+    { icon: RiReactjsLine, name: "React", color: "text-[#8B4513]" },
+    { icon: RiNodejsLine, name: "NodeJS", color: "text-[#8B4513]" },
+    { icon: RiNextjsLine, name: "Next.js", color: "text-[#8B4513]" },
+    { icon: RiCss3Line  , name: "CSS3", color: "text-[#8B4513]" },
     { icon: GitBranch, name: "Git", color: "text-[#8B4513]" },
-    { icon: Terminal2, name: "Linux", color: "text-[#8B4513]" },
+    { icon: FaLinux, name: "Linux", color: "text-[#8B4513]" },
   ]
 
   return (

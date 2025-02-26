@@ -232,7 +232,7 @@ export default function Projects() {
             {/* Decorative lines */}
             <div className="absolute left-0 right-0 top-1/2 h-px bg-[#832c12] dark:bg-[#e6d5c3] opacity-20"></div>
             <div className="relative inline-block bg-[#fefaf5] dark:bg-[#2a2420] px-8">
-              <h1 className="font-serif text-4xl font-bold text-[#832c12] dark:text-[#e6d5c3] mb-4">My Projects</h1>
+              <h1 className="font-serif text-4xl font-bold text-[#832c12] dark:text-[#e6d5c3] mb-4">Projects</h1>
               <p className="text-[#8B4513] dark:text-[#e6d5c3]/80 font-serif">Explore some of my recent work</p>
             </div>
 
