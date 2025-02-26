@@ -53,11 +53,11 @@ export default function Hero() {
                 <div className="relative inline-block mx-auto md:mx-0">
                   {/* Vintage frame effect */}
                   <div className="absolute inset-0 border-4 border-[#832c12] dark:border-[#e6d5c3] rounded-lg transform -rotate-3"></div>
-                  <div className="relative w-28 h-28">
+                  <div className="relative w-28 h-28 lg:h-48 lg:w-48">
                     {!imageLoaded && <div className="absolute inset-0 rounded-lg animate-pulse bg-[#e6d5c3]" />}
                     <img
                       src="https://firebasestorage.googleapis.com/v0/b/stellar-wings.appspot.com/o/IMG_20240807_235955_11zon.jpg?alt=media&token=204ab2c4-926a-44b0-88d2-394dc1f34251"
-                      className={`w-28 h-28 rounded-lg object-cover shadow-lg transition-all duration-500 transform rotate-3 
+                      className={`w-28 h-28 lg:h-48 lg:w-48 rounded-lg object-cover shadow-lg transition-all duration-500 transform rotate-3 
                         ${
                         imageLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
                       }
@@ -69,7 +69,7 @@ export default function Hero() {
                 </div>
 
                 <div className="relative">
-                  <h1 className="font-serif text-4xl font-bold text-[#832c12] dark:text-[#e6d5c3]">
+                  <h1 className="font-serif text-xl lg:text-4xl font-bold text-[#832c12] dark:text-[#e6d5c3]">
                     GAURISANKAR TARASIA
                   </h1>
                   {/* Decorative underline */}
@@ -88,7 +88,7 @@ export default function Hero() {
                         label: "LinkedIn",
                         href: "https://linkedin.com/in/gaurisankar-tarasia-0a32a8235",
                       },
-                      { icon: FiTwitter, label: "Twitter", href: "https://x.com/gaurisankar_li2" },
+                      { icon: FiTwitter,  label: "Twitter", href: "https://x.com/gaurisankar_li2" },
                     ].map((social) => (
                       <Tooltip key={social.label}>
                         <TooltipTrigger asChild>
@@ -97,7 +97,8 @@ export default function Hero() {
                             target="_blank"
                             className="group flex flex-col items-center p-4 rounded-lg    dark:hover:bg-[#3a342f] transition-all border border-[#832c12] dark:border-[#e6d5c3] "
                           >
-                            <social.icon className="w-8 h-8 text-[#832c12] dark:text-[#e6d5c3]" />
+                            <social.icon size="20" className=" text-[#832c12] dark:text-[#e6d5c3]" />
+
                             <span className="mt-2 text-sm font-serif text-[#832c12] dark:text-[#e6d5c3]">
                               {social.label}
                             </span>
@@ -125,7 +126,7 @@ export default function Hero() {
                       <Tooltip key={social.label}>
                         <TooltipTrigger asChild>
                           <Link to={social.href} target="_blank" className="group relative p-2">
-                            <social.icon className="w-6 h-6 text-[#832c12] dark:text-[#e6d5c3] transition-transform group-hover:scale-110" />
+                            <social.icon size="20"  className=" text-[#832c12] dark:text-[#e6d5c3] transition-transform group-hover:scale-110" />
                           </Link>
                         </TooltipTrigger>
                         <TooltipContent>
