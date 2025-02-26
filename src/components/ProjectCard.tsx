@@ -152,88 +152,224 @@
 
 
 
-import React from 'react';
-import { Card, CardHeader, CardBody, CardFooter, Link, Divider, Spacer, Chip, Tooltip } from '@nextui-org/react';
-import {FaStar, FaHourglassStart } from 'react-icons/fa';
+// import React from 'react';
+// import { Card, CardHeader, CardBody, CardFooter, Link, Divider, Spacer, Chip, Tooltip } from '@nextui-org/react';
+// import {FaStar, FaHourglassStart } from 'react-icons/fa';
+
+// interface Project {
+//   title: string;
+//   description: string;
+//   technologies: string[];
+//   isImportant?: boolean;
+//   isUnderDevelopment?: boolean;
+//   liveUrl?: string;
+//   viewProjectLink?: string;
+// }
+
+// interface ProjectCardProps {
+//   project: Project;
+// }
+
+// const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+//   return (
+//     <Card  isPressable shadow='sm' className="max-w-[400px] bg-white/70 dark:bg-gray-800/70 ">
+//       <CardHeader className="flex gap-3 items-center justify-between">
+//       <Tooltip content="Project name." showArrow={true} color='foreground'>
+
+//           <b className="text-md">{project.title}</b>
+// </Tooltip>
+        
+//        <div className='flex items-center gap-2 justify-end text-gray-500 dark:text-gray-300'>
+//        <Tooltip content="This project is under development." showArrow={true} color='foreground'>
+
+//        {project.isUnderDevelopment && (<FaHourglassStart/>)}
+//        </Tooltip>
+//        <Tooltip content="Primary project." showArrow={true} color='foreground'>
+
+//         {project.isImportant && (<FaStar/>)}
+//         </Tooltip>
+//        </div>
+
+
+
+//       </CardHeader>
+//       <Divider />
+//       <CardBody>
+//         <p>{project.description}</p>
+
+//      <Spacer y={5} />
+//     <div className='flex items-center justify-start gap-2'>
+//     {project.technologies.map((tech) => (
+//               <Chip
+//               size='sm'
+//                 key={tech}
+//                 className="px-3 py-1 text-sm rounded-full bg-gray-100/70 dark:bg-gray-700/70 
+//                   text-gray-700 dark:text-gray-300 backdrop-blur-sm"
+//               >
+//                 {tech}
+//               </Chip>
+//             ))}
+
+//     </div>
+       
+//       </CardBody>
+//       <Divider />
+//       <CardFooter>
+//        <div className='gap-5 flex'>
+//        <Tooltip content="View this project live." showArrow={true} color='foreground'>
+
+//        <Link isExternal showAnchorIcon href={project.liveUrl}>
+//           View live
+//         </Link>
+//         </Tooltip>
+//         <Tooltip content="View this project source link." showArrow={true} color='foreground'>
+
+//         <Link isExternal showAnchorIcon href={project.viewProjectLink}>
+//           View project
+//         </Link>
+//         </Tooltip>
+//        </div>
+//       </CardFooter>
+//     </Card>
+//   );
+// };
+
+// export default ProjectCard;
+
+
+
+
+import { Card } from "@/components/ui/card"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import {Link} from "react-router-dom"
+import { Star, Hourglass, ExternalLink } from "lucide-react"
 
 interface Project {
-  title: string;
-  description: string;
-  technologies: string[];
-  isImportant?: boolean;
-  isUnderDevelopment?: boolean;
-  liveUrl?: string;
-  viewProjectLink?: string;
+  title: string
+  description: string
+  technologies: string[]
+  isImportant?: boolean
+  isUnderDevelopment?: boolean
+  liveUrl?: string
+  viewProjectLink?: string
 }
 
 interface ProjectCardProps {
-  project: Project;
+  project: Project
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card  isPressable shadow='sm' className="max-w-[400px] bg-white/70 dark:bg-gray-800/70 ">
-      <CardHeader className="flex gap-3 items-center justify-between">
-      <Tooltip content="Project name." showArrow={true} color='foreground'>
+    <TooltipProvider>
+      <Card className="relative overflow-hidden bg-[#fefaf5] dark:bg-[#352c27] border-2 border-[#832c12] dark:border-[#e6d5c3]">
+        {/* Vintage paper texture */}
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23832c12' fill-opacity='0.1'%3E%3Ccircle cx='25' cy='25' r='1'/%3E%3Ccircle cx='75' cy='75' r='1'/%3E%3C/g%3E%3C/svg%3E")`,
+            backgroundSize: "20px 20px",
+          }}
+        ></div>
 
-          <b className="text-md">{project.title}</b>
-</Tooltip>
-        
-       <div className='flex items-center gap-2 justify-end text-gray-500 dark:text-gray-300'>
-       <Tooltip content="This project is under development." showArrow={true} color='foreground'>
+        {/* Card Content */}
+        <div className="relative p-6 space-y-6">
+          {/* Header */}
+          <div className="flex items-center justify-between">
+            <Tooltip>
+              <TooltipTrigger>
+                <h3 className="font-serif text-xl font-bold text-[#832c12] dark:text-[#e6d5c3]">{project.title}</h3>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Project name</p>
+              </TooltipContent>
+            </Tooltip>
 
-       {project.isUnderDevelopment && (<FaHourglassStart/>)}
-       </Tooltip>
-       <Tooltip content="Primary project." showArrow={true} color='foreground'>
+            <div className="flex items-center gap-2">
+              {project.isUnderDevelopment && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Hourglass className="w-5 h-5 text-[#832c12] dark:text-[#e6d5c3]" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Under development</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+              {project.isImportant && (
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Star className="w-5 h-5 text-[#832c12] dark:text-[#e6d5c3]" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Primary project</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+            </div>
+          </div>
 
-        {project.isImportant && (<FaStar/>)}
-        </Tooltip>
-       </div>
+          <Separator className="border-[#832c12] dark:border-[#e6d5c3] opacity-20" />
 
+          {/* Description */}
+          <p className="text-[#8B4513] dark:text-[#e6d5c3]/80 font-serif">{project.description}</p>
 
-
-      </CardHeader>
-      <Divider />
-      <CardBody>
-        <p>{project.description}</p>
-
-     <Spacer y={5} />
-    <div className='flex items-center justify-start gap-2'>
-    {project.technologies.map((tech) => (
-              <Chip
-              size='sm'
+          {/* Technologies */}
+          <div className="flex flex-wrap gap-2">
+            {project.technologies.map((tech) => (
+              <Badge
                 key={tech}
-                className="px-3 py-1 text-sm rounded-full bg-gray-100/70 dark:bg-gray-700/70 
-                  text-gray-700 dark:text-gray-300 backdrop-blur-sm"
+                variant="outline"
+                className="font-serif border-[#832c12] dark:border-[#e6d5c3] text-[#832c12] dark:text-[#e6d5c3]"
               >
                 {tech}
-              </Chip>
+              </Badge>
             ))}
+          </div>
 
-    </div>
-       
-      </CardBody>
-      <Divider />
-      <CardFooter>
-       <div className='gap-5 flex'>
-       <Tooltip content="View this project live." showArrow={true} color='foreground'>
+          <Separator className="border-[#832c12] dark:border-[#e6d5c3] opacity-20" />
 
-       <Link isExternal showAnchorIcon href={project.liveUrl}>
-          View live
-        </Link>
-        </Tooltip>
-        <Tooltip content="View this project source link." showArrow={true} color='foreground'>
-
-        <Link isExternal showAnchorIcon href={project.viewProjectLink}>
-          View project
-        </Link>
-        </Tooltip>
-       </div>
-      </CardFooter>
-    </Card>
-  );
-};
-
-export default ProjectCard;
-
+          {/* Footer */}
+          <div className="flex gap-4">
+            {project.liveUrl && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link
+                    to={project.liveUrl}
+                    target="_blank"
+                    className="inline-flex items-center gap-2 text-[#832c12] dark:text-[#e6d5c3] hover:underline underline-offset-4 font-serif"
+                  >
+                    View live
+                    <ExternalLink className="w-4 h-4" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View this project live</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+            {project.viewProjectLink && (
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link
+                    to={project.viewProjectLink}
+                    target="_blank"
+                    className="inline-flex items-center gap-2 text-[#832c12] dark:text-[#e6d5c3] hover:underline underline-offset-4 font-serif"
+                  >
+                    View project
+                    <ExternalLink className="w-4 h-4" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View project source</p>
+                </TooltipContent>
+              </Tooltip>
+            )}
+          </div>
+        </div>
+      </Card>
+    </TooltipProvider>
+  )
+}
 
