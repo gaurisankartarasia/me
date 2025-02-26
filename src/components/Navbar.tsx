@@ -53,20 +53,21 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      #nprogress .bar {
-        background: #832c12 !important;
-        height: 3px !important;
-      }
-      #nprogress .peg {
-        box-shadow: 0 0 10px #832c12, 0 0 5px #832c12 !important;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => style.remove();
-  }, []);
+  // useEffect(() => {
+  //   const style = document.createElement('style');
+  //   style.textContent = `
+  //     #nprogress .bar {
+  //       background: #832c12 !important;
+  //       height: 3px !important;
+  //     }
+  //     #nprogress .peg {
+  //       box-shadow: 0 0 10px #832c12, 0 0 5px #832c12 !important;
+  //     }
+  //   `;
+  //   document.head.appendChild(style);
+  //   return () => style.remove();
+
+  // }, []);
 
   const navItems: NavItemType[] = [
     { path: '/', name: 'Home', icon: Home },
@@ -137,12 +138,13 @@ const Navbar: React.FC = () => {
               backgroundSize: "40px 4px",
             }}
           ></div>
+          
         </div>
       </div>
 
       {/* Mobile Floating Menu Button */}
       <div className="fixed bottom-6 right-6 z-50 md:hidden">
-        <Drawer open={open} onOpenChange={setOpen}>
+        <Drawer open={open} onOpenChange={setOpen}  >
           <DrawerTrigger asChild>
             <Button 
               size="icon" 
@@ -153,15 +155,8 @@ const Navbar: React.FC = () => {
               <Menu size={24} />
             </Button>
           </DrawerTrigger>
-          <DrawerContent className="bg-[#fefaf5] dark:bg-[#2a2420] border-t-2 border-[#832c12]/20 dark:border-[#e6d5c3]/20">
-            {/* Vintage texture overlay */}
-            <div
-              className="absolute inset-0 opacity-5 pointer-events-none"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Ccircle cx='50' cy='50' r='1'/%3E%3C/g%3E%3C/svg%3E")`,
-                backgroundSize: "24px 24px",
-              }}
-            ></div>
+          <DrawerContent className="bg-[#fefaf5] dark:bg-[#2a2420] border-t-2 border-[#832c12]/20 dark:border-[#e6d5c3]/20 top-40" >
+           
 
             <DrawerHeader className="border-b border-[#832c12]/20 dark:border-[#e6d5c3]/20">
               <div className="flex justify-between items-center">

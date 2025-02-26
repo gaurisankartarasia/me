@@ -12,7 +12,7 @@ export default function Hero() {
   const [imageLoaded, setImageLoaded] = useState(false)
 
   return (
-    <div className="min-h-screen bg-[#fefaf5] dark:bg-[#2a2420]">
+    <div className="bg-[#fefaf5] dark:bg-[#2a2420]">
       {/* Vintage texture overlay */}
       <div
         className="absolute inset-0 opacity-5 pointer-events-none"
@@ -53,11 +53,11 @@ export default function Hero() {
                 <div className="relative inline-block mx-auto md:mx-0">
                   {/* Vintage frame effect */}
                   <div className="absolute inset-0 border-4 border-[#832c12] dark:border-[#e6d5c3] rounded-lg transform -rotate-3"></div>
-                  <div className="relative w-48 h-48">
+                  <div className="relative w-28 h-28">
                     {!imageLoaded && <div className="absolute inset-0 rounded-lg animate-pulse bg-[#e6d5c3]" />}
                     <img
                       src="https://firebasestorage.googleapis.com/v0/b/stellar-wings.appspot.com/o/IMG_20240807_235955_11zon.jpg?alt=media&token=204ab2c4-926a-44b0-88d2-394dc1f34251"
-                      className={`w-48 h-48 rounded-lg object-cover shadow-lg transition-all duration-500 transform rotate-3 
+                      className={`w-28 h-28 rounded-lg object-cover shadow-lg transition-all duration-500 transform rotate-3 
                         ${
                         imageLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
                       }

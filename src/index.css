@@ -5,24 +5,23 @@
 
 
 
+:root {
+  --progress-bar-color: #832c12; /* Default for light theme */
+}
 
-/* Style for NProgress loader */
-#nprogress {
-  pointer-events: none;
+.dark {
+  --progress-bar-color: #e6d5c3 !important; /* Dark theme color */
 }
 
 #nprogress .bar {
-  background: rgb(0, 145, 255);
-  position: fixed;
-  left: 0;
-  height: 3px;
-  width: 100%;
-  z-index: 1031; /* Ensure it's above other content but below navbar */
+  background: var(--progress-bar-color) !important;
+  height: 3px !important;
 }
 
 #nprogress .peg {
-  display: none;
+  box-shadow: 0 0 10px var(--progress-bar-color), 0 0 5px var(--progress-bar-color) !important;
 }
+
 
 /*   
 ---break---
