@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import {Link} from "react-router-dom"
-import { FiMessageCircle, FiGithub, FiLinkedin, FiInstagram, FiFacebook, FiTwitter } from "react-icons/fi";
+import { FiMessageCircle, FiGithub, FiLinkedin, FiInstagram, FiFacebook, FiTwitter, FiMail } from "react-icons/fi";
 
 import { Card } from "@/components/ui/card"
 import { Tooltip } from "@/components/ui/tooltip"
@@ -82,13 +82,15 @@ export default function Hero() {
                 <div className="grid grid-cols-3 gap-6">
                   <TooltipProvider>
                     {[
-                      { icon: FiGithub, label: "GitHub", href: "https://github.com/gaurisankartarasia" },
+{ icon: FiMail, label: "Email", href: "mailto:gaurisankartarasia@gmail.com?subject=From Your Website&body=Hello%20Gaurisankar," },          
+           
                       {
+
                         icon: FiLinkedin,
                         label: "LinkedIn",
                         href: "https://linkedin.com/in/gaurisankar-tarasia-0a32a8235",
                       },
-                      { icon: FiTwitter,  label: "Twitter", href: "https://x.com/gaurisankar_li2" },
+                       { icon: FiGithub, label: "GitHub", href: "https://github.com/gaurisankartarasia" },
                     ].map((social) => (
                       <Tooltip key={social.label}>
                         <TooltipTrigger asChild>
@@ -117,6 +119,7 @@ export default function Hero() {
                     {[
                       { icon: FiInstagram, label: "Instagram", href: "https://www.instagram.com/gaurisankartarasia/" },
                       { icon: FiFacebook, label: "Facebook", href: "https://www.facebook.com/gaurisankar.littu" },
+                      { icon: FiTwitter,  label: "Twitter", href: "https://x.com/gaurisankar_li2" },
                       {
                         icon: FiMessageCircle,
                         label: "WhatsApp",
