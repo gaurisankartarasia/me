@@ -160,49 +160,50 @@
 import { Suspense } from "react"
 import { Loader2 } from "lucide-react"
 import ProjectCard from "../components/ProjectCard"
+import projects from "@/config/projects_config"
 
-interface Project {
-  title: string
-  description: string
-  technologies: string[]
-  isImportant?: boolean
-  isUnderDevelopment?: boolean
-  liveUrl?: string
-  viewProjectLink?: string
-}
+// interface Project {
+//   title: string
+//   description: string
+//   technologies: string[]
+//   isImportant?: boolean
+//   isUnderDevelopment?: boolean
+//   liveUrl?: string
+//   viewProjectLink?: string
+// }
 
-const projects: Project[] = [
-  {
-    title: "Synapse",
-    description: "A platform that connects people together.",
-    technologies: ["React", "Next.js", "TypeScript", "Firebase"],
-    isImportant: true,
-    isUnderDevelopment: true,
-    liveUrl: "https://synapse-orcin.vercel.app",
-    viewProjectLink: "kn",
-  },
-  {
-    title: "Badamba",
-    description: "My village site.",
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    liveUrl: "https://gaurisankartarasia.github.io/Badamba",
-    viewProjectLink: "",
-  },
-  {
-    title: "Stellar Wings",
-    description: "An educational institution site.",
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    liveUrl: "https://gaurisankartarasia.github.io/StellarWings",
-    viewProjectLink: "",
-  },
-  {
-    title: "Convoya",
-    description: "A small landing page for a platform.",
-    technologies: ["HTML5", "CSS3", "JavaScript"],
-    liveUrl: "https://gaurisankartarasia.github.io/Convoya",
-    viewProjectLink: "",
-  },
-]
+// const projects: Project[] = [
+//   {
+//     title: "Synapse",
+//     description: "A platform that connects people together.",
+//     technologies: ["React", "Next.js", "TypeScript", "Firebase"],
+//     isImportant: true,
+//     isUnderDevelopment: true,
+//     liveUrl: "https://synapse-orcin.vercel.app",
+//     viewProjectLink: "kn",
+//   },
+//   {
+//     title: "Badamba",
+//     description: "My village site.",
+//     technologies: ["HTML5", "CSS3", "JavaScript"],
+//     liveUrl: "https://gaurisankartarasia.github.io/Badamba",
+//     viewProjectLink: "",
+//   },
+//   {
+//     title: "Stellar Wings",
+//     description: "An educational institution site.",
+//     technologies: ["HTML5", "CSS3", "JavaScript"],
+//     liveUrl: "https://gaurisankartarasia.github.io/StellarWings",
+//     viewProjectLink: "",
+//   },
+//   {
+//     title: "Convoya",
+//     description: "A small landing page for a platform.",
+//     technologies: ["HTML5", "CSS3", "JavaScript"],
+//     liveUrl: "https://gaurisankartarasia.github.io/Convoya",
+//     viewProjectLink: "",
+//   },
+// ]
 
 export default function Projects() {
   return (

@@ -1,15 +1,26 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  FiMessageCircle,
+  FiGithub,
+  FiLinkedin,
+  FiInstagram,
+  FiFacebook,
+  FiTwitter,
+  FiMail,
+} from "react-icons/fi";
 
-
-import { useState } from "react"
-import {Link} from "react-router-dom"
-import { FiMessageCircle, FiGithub, FiLinkedin, FiInstagram, FiFacebook, FiTwitter, FiMail } from "react-icons/fi";
-
-import { Card } from "@/components/ui/card"
-import { Tooltip } from "@/components/ui/tooltip"
-import { TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Card } from "@/components/ui/card";
+import { Tooltip } from "@/components/ui/tooltip";
+import {
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import ResumeButton from "./Resume";
 
 export default function Hero() {
-  const [imageLoaded, setImageLoaded] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
     <div className="bg-[#fefaf5] dark:bg-[#2a2420]">
@@ -54,13 +65,17 @@ export default function Hero() {
                   {/* Vintage frame effect */}
                   <div className="absolute inset-0 border-4 border-[#832c12] dark:border-[#e6d5c3] rounded-lg transform -rotate-3"></div>
                   <div className="relative w-28 h-28 lg:h-48 lg:w-48">
-                    {!imageLoaded && <div className="absolute inset-0 rounded-lg animate-pulse bg-[#e6d5c3]" />}
+                    {!imageLoaded && (
+                      <div className="absolute inset-0 rounded-lg animate-pulse bg-[#e6d5c3]" />
+                    )}
                     <img
                       src="https://firebasestorage.googleapis.com/v0/b/stellar-wings.appspot.com/o/IMG_20240807_235955_11zon.jpg?alt=media&token=204ab2c4-926a-44b0-88d2-394dc1f34251"
                       className={`w-28 h-28 lg:h-48 lg:w-48 rounded-lg object-cover shadow-lg transition-all duration-500 transform rotate-3 
                         ${
-                        imageLoaded ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                      }
+                          imageLoaded
+                            ? "opacity-100 scale-100"
+                            : "opacity-0 scale-95"
+                        }
                       `}
                       alt="Gaurisankar Tarasia"
                       onLoad={() => setImageLoaded(true)}
@@ -82,15 +97,22 @@ export default function Hero() {
                 <div className="grid grid-cols-3 gap-6">
                   <TooltipProvider>
                     {[
-{ icon: FiMail, label: "Email", href: "mailto:gaurisankartarasia@gmail.com?subject=From Your Website&body=Hello%20Gaurisankar," },          
-           
                       {
+                        icon: FiMail,
+                        label: "Email",
+                        href: "mailto:gaurisankartarasia@gmail.com?subject=From Your Website&body=Hello%20Gaurisankar,",
+                      },
 
+                      {
                         icon: FiLinkedin,
                         label: "LinkedIn",
                         href: "https://linkedin.com/in/gaurisankar-tarasia-0a32a8235",
                       },
-                       { icon: FiGithub, label: "GitHub", href: "https://github.com/gaurisankartarasia" },
+                      {
+                        icon: FiGithub,
+                        label: "GitHub",
+                        href: "https://github.com/gaurisankartarasia",
+                      },
                     ].map((social) => (
                       <Tooltip key={social.label}>
                         <TooltipTrigger asChild>
@@ -99,7 +121,10 @@ export default function Hero() {
                             target="_blank"
                             className="group flex flex-col items-center p-4 rounded-lg    dark:hover:bg-[#3a342f] transition-all border border-[#832c12] dark:border-[#e6d5c3] "
                           >
-                            <social.icon size="20" className=" text-[#832c12] dark:text-[#e6d5c3]" />
+                            <social.icon
+                              size="20"
+                              className=" text-[#832c12] dark:text-[#e6d5c3]"
+                            />
 
                             <span className="mt-2 text-sm font-serif text-[#832c12] dark:text-[#e6d5c3]">
                               {social.label}
@@ -115,11 +140,29 @@ export default function Hero() {
                 </div>
 
                 <div className="flex justify-center space-x-8 pt-6 border-t-2 border-[#832c12]  dark:border-[#e6d5c3] border-dashed">
+                  <div className="flex justify-center">
+                    <ResumeButton
+                      liveResumeLink="https://www.canva.com/design/DAGhhbzugGA/8XIdx8tWkO4MEyiDVJIC-A/view?utm_content=DAGhhbzugGA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h55fa4fb22f"
+                      downloadResumeLink="https://raw.githubusercontent.com/gaurisankartarasia/4565dnfi4/main/Gaurisankar%20Tarasia20250313.pdf"
+                    />
+                  </div>
                   <TooltipProvider>
                     {[
-                      { icon: FiInstagram, label: "Instagram", href: "https://www.instagram.com/gaurisankartarasia/" },
-                      { icon: FiFacebook, label: "Facebook", href: "https://www.facebook.com/gaurisankar.littu" },
-                      { icon: FiTwitter,  label: "Twitter", href: "https://x.com/gaurisankar_li2" },
+                      {
+                        icon: FiInstagram,
+                        label: "Instagram",
+                        href: "https://www.instagram.com/gaurisankartarasia/",
+                      },
+                      {
+                        icon: FiFacebook,
+                        label: "Facebook",
+                        href: "https://www.facebook.com/gaurisankar.littu",
+                      },
+                      {
+                        icon: FiTwitter,
+                        label: "Twitter",
+                        href: "https://x.com/gaurisankar_li2",
+                      },
                       {
                         icon: FiMessageCircle,
                         label: "WhatsApp",
@@ -128,8 +171,15 @@ export default function Hero() {
                     ].map((social) => (
                       <Tooltip key={social.label}>
                         <TooltipTrigger asChild>
-                          <Link to={social.href} target="_blank" className="group relative p-2">
-                            <social.icon size="20"  className=" text-[#832c12] dark:text-[#e6d5c3] transition-transform group-hover:scale-110" />
+                          <Link
+                            to={social.href}
+                            target="_blank"
+                            className="group relative p-2"
+                          >
+                            <social.icon
+                              size="20"
+                              className=" text-[#832c12] dark:text-[#e6d5c3] transition-transform group-hover:scale-110"
+                            />
                           </Link>
                         </TooltipTrigger>
                         <TooltipContent>
@@ -145,6 +195,5 @@ export default function Hero() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
-
