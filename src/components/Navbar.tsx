@@ -222,10 +222,10 @@ const Navbar: React.FC = () => {
       to={path}
       onClick={onClick} // This will call setOpen(false) when a NavItem is clicked
       className={({ isActive }) =>
-        `${isMobile ? 'w-full' : 'w-auto'} flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${
+        `${isMobile ? 'w-full' : 'w-auto'} flex items-center gap-2 px-3 py-2 rounded-3xl transition-colors ${
           isActive
-            ? 'bg-accent text-accent-foreground font-medium'
-            : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
+            ? 'border-2 text-accent-foreground font-medium'
+            : 'text-muted-foreground hover:text-accent-foreground'
         }`
       }
     >

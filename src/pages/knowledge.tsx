@@ -133,27 +133,21 @@ import {
   Card, 
   CardContent 
 } from "@/components/ui/card";
-import { 
-  GitBranch, 
-  Code2, 
-  FileCode, 
-  Server, 
-  Layers, 
-  Code, 
-  Terminal 
-} from "lucide-react";
+import { GitBranch } from "lucide-react"
+import { RiJavascriptLine, RiReactjsLine, RiNodejsLine, RiNextjsLine, RiCss3Line } from "react-icons/ri";
+import { TbBrandTypescript } from "react-icons/tb";
+import { FaLinux } from "react-icons/fa";
 
 export default function Knowledge() {
-  // Replaced react-icons with Lucide icons for consistency with shadcn UI
   const skills = [
-    { icon: Code2, name: "JavaScript" },
-    { icon: FileCode, name: "TypeScript" },
-    { icon: Code, name: "React" },
-    { icon: Server, name: "NodeJS" },
-    { icon: Layers, name: "Next.js" },
-    { icon: Code, name: "CSS3" },
+    { icon: RiJavascriptLine, name: "JavaScript" },
+    { icon: TbBrandTypescript, name: "TypeScript" },
+    { icon: RiReactjsLine, name: "React" },
+    { icon: RiNodejsLine, name: "NodeJS" },
+    { icon: RiNextjsLine, name: "Next.js" },
+    { icon: RiCss3Line, name: "CSS3" },
     { icon: GitBranch, name: "Git" },
-    { icon: Terminal, name: "Linux" },
+    { icon: FaLinux, name: "Linux" },
   ];
 
   return (
@@ -161,10 +155,8 @@ export default function Knowledge() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold tracking-tight mb-2">
-            Knowledge & Skills
-          </h1>
-          <p className="text-muted-foreground">
+         
+          <p className= " text-xl text-muted-foreground">
             Technologies I work with
           </p>
         </div>
@@ -175,7 +167,7 @@ export default function Knowledge() {
             {skills.map((skill) => (
               <Tooltip key={skill.name}>
                 <TooltipTrigger asChild>
-                  <Card className="overflow-hidden transition-all duration-200 hover:shadow-md">
+                  <Card className="overflow-hidden transition-all cursor-pointer duration-200 hover:shadow active:shadow-none active:scale-95 ">
                     <CardContent className="flex flex-col items-center p-6">
                       <skill.icon className="w-6 h-6 text-primary mb-4" />
                       <span className="font-medium">

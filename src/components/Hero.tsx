@@ -165,13 +165,12 @@
 
 
 
-import React, { useState, useEffect, ElementType } from "react"; // Import React hooks and ElementType for icon typing
-import {
-    Github,
-    Linkedin,
-    Instagram,
-    Mail
-} from "lucide-react";
+import { useState, useEffect, ElementType } from "react"; 
+
+
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { IoMdMail } from "react-icons/io";
+
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -269,27 +268,24 @@ export default function Hero(): JSX.Element { // Define return type as JSX.Eleme
 
     // --- Social Links with Type ---
     const socialPrimary: SocialLink[] = [ // Type the array as SocialLink[]
-        {
-            icon: Mail,
-            label: "Email",
-            href: "mailto:gaurisankartarasia@gmail.com?subject=From Your Website&body=Hello%20Gaurisankar,",
-        },
-        {
-            icon: Linkedin,
-            label: "LinkedIn",
-            href: "https://linkedin.com/in/gaurisankar-tarasia-0a32a8235",
-        },
-        {
-            icon: Github,
+         {
+            icon: FaGithub,
             label: "GitHub",
             // Use fetched URL if available, otherwise construct it
             href: githubData?.html_url ?? `https://github.com/${githubUsername}`, // Use nullish coalescing (??)
         },
+       
         {
-            icon: Instagram,
-            label: "Instagram",
-            href: "https://www.instagram.com/gaurisankartarasia/",
+            icon: FaLinkedin,
+            label: "LinkedIn",
+            href: "https://linkedin.com/in/gaurisankar-tarasia-0a32a8235",
         },
+        {
+            icon: IoMdMail,
+            label: "Email",
+            href: "mailto:gaurisankartarasia@gmail.com?subject=From Your Website&body=Hello%20Gaurisankar,",
+        },
+       
     ];
 
     // --- Render Loading State ---
@@ -362,7 +358,7 @@ export default function Hero(): JSX.Element { // Define return type as JSX.Eleme
 
                         {/* Right Column: Socials & Resume */}
                         <div className="space-y-6">
-                            <div className="grid grid-cols-4 gap-2">
+                            <div className="grid grid-cols-3 gap-2">
                                 <TooltipProvider>
                                     {socialPrimary.map((social) => (
                                         <Tooltip key={social.label}>
@@ -371,11 +367,11 @@ export default function Hero(): JSX.Element { // Define return type as JSX.Eleme
                                                     href={social.href}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
-                                                    className="flex flex-col items-center justify-center p-3 rounded-md border hover:bg-accent transition-colors"
+                                                    className="flex flex-col items-center justify-center p-3 rounded-full border hover:bg-accent transition-colors"
                                                     aria-label={`Go to ${social.label}`}
                                                 >
                                                     {/* Render the icon component dynamically */}
-                                                    <social.icon className="h-4 w-4" />
+                                                    <social.icon className="h-5 w-5" />
                                                 </a>
                                             </TooltipTrigger>
                                             <TooltipContent>
@@ -389,7 +385,7 @@ export default function Hero(): JSX.Element { // Define return type as JSX.Eleme
                             <Separator className="my-4" />
 
                             <div className="flex flex-col sm:flex-row justify-center items-center space-y-3 sm:space-y-0 sm:space-x-4">
-                                <Button variant="outline" asChild size="sm">
+                                <Button variant="default"  asChild size="sm">
                                     <a
                                         href="https://www.canva.com/design/DAGhhbzugGA/8XIdx8tWkO4MEyiDVJIC-A/view?utm_content=DAGhhbzugGA&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h55fa4fb22f"
                                         target="_blank"
@@ -401,8 +397,8 @@ export default function Hero(): JSX.Element { // Define return type as JSX.Eleme
 
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
-                                        <Button variant="default" size="sm">
-                                            Download CV
+                                        <Button variant="outline" size="sm">
+                                            Download Resume
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
