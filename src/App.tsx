@@ -1,10 +1,9 @@
 // import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.tsx";
-import Hero from "./components/Hero.tsx";
-import Knowledge from "./pages/knowledge.tsx";
-import Projects from "./pages/projects.tsx";
-import GitHubReposPage from "./components/Repos.tsx";
+import FrontPage from "./pages/Hero.tsx";
+
+import GitHubReposPage from "./pages/Repos.tsx";
 import "./App.css";
 
 function App() {
@@ -15,13 +14,11 @@ function App() {
  <main className="pt-8">
         <Routes>
          
-          <Route path="/" element={<Hero />} />
+          <Route path="/" element={<FrontPage />} />
 
-          <Route path="/knowledge" element={<Knowledge />} />
-          <Route path="/github_repos" element={<GitHubReposPage />} />
-          <Route path="/projects" element={<Projects />} />
+          <Route path="/git_repos" element={<GitHubReposPage />} />
         </Routes>
-        
+       
         </main>
       </BrowserRouter>
     </>

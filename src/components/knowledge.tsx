@@ -151,7 +151,7 @@ export default function Knowledge() {
   ];
 
   return (
-    <div className=" bg-background px-4">
+    <div className="py-8 bg-background px-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
@@ -165,9 +165,9 @@ export default function Knowledge() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <TooltipProvider>
             {skills.map((skill) => (
-              <Tooltip key={skill.name}>
-                <TooltipTrigger asChild>
-                  <Card className="overflow-hidden transition-all cursor-pointer duration-200 hover:shadow active:shadow-none active:scale-95 ">
+              <Tooltip key={skill.name}  >
+                <TooltipTrigger asChild  > 
+                  <Card className="overflow-hidden transition-all cursor-pointer duration-200 shadow-lg active:shadow-none active:scale-95 ">
                     <CardContent className="flex flex-col items-center p-6">
                       <skill.icon className="w-6 h-6 text-primary mb-4" />
                       <span className="font-medium">
@@ -176,7 +176,7 @@ export default function Knowledge() {
                     </CardContent>
                   </Card>
                 </TooltipTrigger>
-                <TooltipContent>
+                <TooltipContent  >
                   <p>{skill.name}</p>
                 </TooltipContent>
               </Tooltip>

@@ -169,7 +169,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <TooltipProvider>
       {/* Use standard Shadcn Card */}
-      <Card className="flex flex-col h-full">
+      <Card className="flex flex-col h-full shadow-xl">
         {" "}
         {/* Added flex flex-col h-full for consistent height if needed */}
         <CardHeader>
@@ -264,27 +264,29 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 </TooltipContent>
               </Tooltip>
             )}
-            {project.viewProjectLink && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  {/* Standard link styling */}
-                  <Link
-                    to={project.viewProjectLink}
-                    target="_blank"
-                    rel="noopener noreferrer" // Added rel for security
-                  >
-                    <Button variant="outline">
-                      {" "}
-                      View project
-                      <ExternalLink className="w-3.5 h-3.5" />{" "}
-                    </Button>
-                  </Link>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>View project source</p>
-                </TooltipContent>
-              </Tooltip>
-            )}
+         {project.viewProjectLink ? (
+  <Tooltip>
+    <TooltipTrigger asChild>
+      {/* Standard link styling */}
+      <Link
+        to={project.viewProjectLink}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Button variant="outline">
+          {" "}
+          View project
+          <ExternalLink className="w-3.5 h-3.5" />{" "}
+        </Button>
+      </Link>
+    </TooltipTrigger>
+    <TooltipContent>
+      <p>View project source</p>
+    </TooltipContent>
+  </Tooltip>
+) : (
+  <p className="text-yellow-700" >Source is private</p>
+)}
           </div>
         </CardFooter>
       </Card>

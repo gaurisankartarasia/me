@@ -189,6 +189,10 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 
+import Knowledge from "../components/knowledge.tsx";
+import Projects from "../components/projects.tsx";
+
+
 // --- Define Type for GitHub User Data ---
 interface GitHubUserData {
     login: string;
@@ -232,7 +236,7 @@ interface SocialLink {
     href: string;
 }
 
-export default function Hero(): JSX.Element { // Define return type as JSX.Element
+export default function FrontPage(): JSX.Element { // Define return type as JSX.Element
     // --- State with Types ---
     const [githubData, setGithubData] = useState<GitHubUserData | null>(null); // State can be GitHubUserData or null
     const [loading, setLoading] = useState<boolean>(true); // State is boolean
@@ -292,7 +296,7 @@ export default function Hero(): JSX.Element { // Define return type as JSX.Eleme
     if (loading) {
         return (
             <div className="flex items-center justify-center h-96 p-4 bg-background">
-                <Card className="w-full max-w-4xl">
+                <Card className="w-full max-w-4xl border-none">
                     <CardContent className="p-6 md:p-8 text-center">
                         Loading GitHub Profile...
                     </CardContent>
@@ -307,7 +311,7 @@ export default function Hero(): JSX.Element { // Define return type as JSX.Eleme
             <div className="flex items-center justify-center h-96 p-4 bg-background">
                 <Card className="w-full max-w-4xl">
                     <CardContent className="p-6 md:p-8 text-center text-red-600">
-                        Error loading profile: {error}
+                        Network error: {error}
                     </CardContent>
                 </Card>
             </div>
@@ -317,9 +321,13 @@ export default function Hero(): JSX.Element { // Define return type as JSX.Eleme
     // --- Render Main Content ---
     // Type safety ensures githubData is not null here if loading/error checks passed
     // but optional chaining (?.) is still good practice for potentially null fields like name, bio, location
-    return (
+    return (  
+        <div>
+
+     
         <div className="flex items-center justify-center min-h-96 p-4 bg-background">
-            <Card className="w-full max-w-4xl">
+           
+            <Card className="w-full max-w-4xl border-none">
                 <CardContent className="p-6 md:p-8">
                     <div className="grid gap-8 md:grid-cols-2 items-center">
                         {/* Left Column: Profile */}
@@ -419,6 +427,11 @@ export default function Hero(): JSX.Element { // Define return type as JSX.Eleme
                     </div>
                 </CardContent>
             </Card>
-        </div>
+            
+        </div>  
+        
+         <Knowledge />
+        <Projects />
+         </div>  
     );
 }

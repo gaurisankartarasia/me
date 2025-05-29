@@ -210,9 +210,7 @@ const Navbar: React.FC = () => {
 
   const navItems: NavItemType[] = [
     { path: '/', name: 'Home', icon: Home },
-    { path: '/knowledge', name: 'Knowledge', icon: BookOpen },
-    { path: '/github_repos', name: 'GitHub Repos', icon: GitBranch },
-    { path: '/projects', name: 'Projects', icon: GitBranch },
+    { path: '/git_repos', name: 'Git Repos', icon: GitBranch },
     
   ];
 

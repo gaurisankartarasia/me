@@ -81,13 +81,13 @@
 
 import { Suspense } from "react"
 import { Loader2 } from "lucide-react"
-import ProjectCard from "../components/ProjectCard" // Adjust path if needed
+import ProjectCard from "./ProjectCard" // Adjust path if needed
 import projects from "@/config/projects_config" // Adjust path if needed
 
 export default function Projects() {
   return (
     // Use standard background color from theme (likely bg-background)
-    <div className=" bg-background text-foreground">
+    <div className="py-8 bg-background text-foreground">
       {/* Removed texture overlay and decorative borders */}
 
       {/* Standard padding and max-width container */}
@@ -95,9 +95,9 @@ export default function Projects() {
         {/* Simplified Header */}
         <div className="text-center mb-12 md:mb-16">
           {/* Standard heading styles */}
-          <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl mb-3">
+          <p className="text-2xl font-bold tracking-tight sm:text-4xl lg:text-4xl mb-3">
             Projects
-          </h1>
+          </p>
           {/* Standard paragraph styles */}
           <p className="text-lg text-muted-foreground">
             Explore some of my recent work
