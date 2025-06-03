@@ -11,6 +11,8 @@ node_modules
 firebase.json
 .firebaserc
 apphosting.yaml
+.firebase
+.github
 dist
 dist-ssr
 *.local
