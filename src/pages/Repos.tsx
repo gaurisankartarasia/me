@@ -1,422 +1,399 @@
-// // src/components/GitHubReposPage.tsx (or wherever you place your components)
+// import React, { useState, useEffect } from "react";
 
-// import React, { useState, useEffect } from 'react';
+// import {
+//   Box,
+//   Typography,
+//   Grid,
+//   Card,
+//   CardHeader,
+//   CardContent,
+//   CardActions,
+//   Chip,
+//   Alert,
+//   AlertTitle,
+//   Link,
+//   CardActionArea,
+//   CircularProgress,
+//   Container,
+// } from "@mui/material";
 
-// // --- Define Type for GitHub Repository Data ---
-// // Based on common fields from the GitHub API response for repos
-// interface GitHubRepo {
-//     id: number;
-//     name: string;
-//     full_name: string;
-//     html_url: string;
-//     description: string | null; // Description can be null
-//     language: string | null;    // Primary language can be null
-//     stargazers_count: number;
-//     watchers_count: number;
-//     forks_count: number;
-//     open_issues_count: number;
-//     updated_at: string; // ISO 8601 format string
-//     pushed_at: string; // ISO 8601 format string
-//     license: { // License info can be complex or null
-//         key: string;
-//         name: string;
-//         spdx_id: string;
-//         url: string | null;
-//         node_id: string;
-//     } | null;
-//     topics: string[]; // Array of topic strings
-// }
+// import { MdOutlineStarBorder, MdAltRoute } from "react-icons/md";
 
-// // Props interface (optional, if you want to pass username as prop)
+// import { GitHubRepo } from "@/types";
+
 // interface GitHubReposPageProps {
-//     username?: string; // Make username optional prop
+//   username?: string;
 // }
 
-// // Default username if not provided via props
-// const DEFAULT_USERNAME = 'gaurisankartarasia'; // Change this to the desired default username
+// const DEFAULT_USERNAME = "gaurisankartarasia";
 
-// const GitHubReposPage: React.FC<GitHubReposPageProps> = ({ username = DEFAULT_USERNAME }) => {
-//     // --- State with Types ---
-//     const [repos, setRepos] = useState<GitHubRepo[]>([]); // State holds an array of GitHubRepo
-//     const [loading, setLoading] = useState<boolean>(true);
-//     const [error, setError] = useState<string | null>(null);
+// // Helper for language colors - returns hex values for MUI
+// const getLanguageMuiColor = (language: string | null): string => {
+//   if (!language) return "#A9A9A9"; // Default for null language
+//   const languageKey = language.toLowerCase();
+//   const colors: { [key: string]: string } = {
+//     typescript: "#3178c6",
+//     javascript: "#f0db4f",
+//     python: "#3572A5",
+//     java: "#b07219",
+//     html: "#e34c26",
+//     css: "#563d7c",
+//     go: "#00ADD8",
+//     rust: "#dea584",
+//     shell: "#89e051",
+//     "c#": "#178600",
+//     "c++": "#f34b7d",
+//     php: "#4F5D95",
+//     ruby: "#701516",
+//     swift: "#F05138",
+//     kotlin: "#A97BFF",
+//     "jupyter notebook": "#DA5B0B",
+//   };
+//   return colors[languageKey] || "#A9A9A9";
+// };
 
-//     // --- Fetch GitHub Repos Data ---
-//     useEffect(() => {
-//         setLoading(true);
-//         setError(null);
-//         setRepos([]); // Clear previous repos on new fetch
+// const GitHubReposPage: React.FC<GitHubReposPageProps> = ({
+//   username = DEFAULT_USERNAME,
+// }) => {
+//   const [repos, setRepos] = useState<GitHubRepo[]>([]);
+//   const [loading, setLoading] = useState<boolean>(true);
+//   const [error, setError] = useState<string | null>(null);
 
-//         // Fetch repos sorted by last updated time (descending)
-//         fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`)
-//             .then((response) => {
-//                 if (!response.ok) {
-//                     // Handle user not found (404) or other errors
-//                     if (response.status === 404) {
-//                         throw new Error(`GitHub user "${username}" not found.`);
-//                     }
-//                     throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
-//                 }
-//                 // Assert the type of the resolved JSON promise
-//                 return response.json() as Promise<GitHubRepo[]>;
-//             })
-//             .then((data) => {
-//                 setRepos(data); // Store fetched repos
-//                 setLoading(false);
-//             })
-//             .catch((fetchError: unknown) => {
-//                 console.error('Error fetching GitHub repositories:', fetchError);
-//                 if (fetchError instanceof Error) {
-//                     setError(fetchError.message);
-//                 } else {
-//                     setError("An unknown error occurred while fetching repositories.");
-//                 }
-//                 setLoading(false);
-//             });
-//         // Re-run effect if the username prop changes
-//     }, [username]);
+//   useEffect(() => {
+//     setLoading(true);
+//     setError(null);
+//     setRepos([]);
 
-//     // --- Helper to format date ---
-//     const formatDate = (dateString: string): string => {
-//         try {
-//             return new Intl.DateTimeFormat('en-US', {
-//                 year: 'numeric',
-//                 month: 'short',
-//                 day: 'numeric',
-//             }).format(new Date(dateString));
-//         } catch (e) {
-//             return dateString; // Fallback to original string if date is invalid
+//     fetch(
+//       `https://api.github.com/users/${username}/repos?sort=updated&direction=desc`
+//     )
+//       .then((response) => {
+//         if (!response.ok) {
+//           if (response.status === 404) {
+//             throw new Error(`GitHub user "${username}" not found.`);
+//           }
+//           if (response.status === 403) {
+//             // Handle rate limiting
+//             throw new Error(
+//               `GitHub API rate limit exceeded. Please try again later.`
+//             );
+//           }
+//           throw new Error(
+//             `GitHub API error: ${response.status} ${response.statusText}`
+//           );
 //         }
-//     };
+//         return response.json() as Promise<GitHubRepo[]>;
+//       })
+//       .then((data) => {
+//         setRepos(data);
+//         setLoading(false);
+//       })
+//       .catch((fetchError: unknown) => {
+//         console.error("Error fetching GitHub repositories:", fetchError);
+//         if (fetchError instanceof Error) {
+//           setError(fetchError.message);
+//         } else {
+//           setError("An unknown error occurred while fetching repositories.");
+//         }
+//         setLoading(false);
+//       });
+//   }, [username]);
 
-//     // --- Render Component ---
-//     return (
-//         <div className="container mx-auto p-4 md:p-6">
-//             <h1 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6">
-//                 Git Repositories of <span className="font-mono">{username}</span>
-//             </h1>
+//   const formatDate = (dateString: string): string => {
+//     try {
+//       return new Intl.DateTimeFormat("en-US", {
+//         year: "numeric",
+//         month: "short",
+//         day: "numeric",
+//       }).format(new Date(dateString));
+//     } catch {
+//       return dateString;
+//     }
+//   };
 
-//             {/* Loading State */}
-//             {loading && (
-//                 <div className="text-center text-gray-500">
-//                     Loading repositories...
-//                 </div>
-//             )}
+//   const Loader = () => (
+//     <Box
+//       sx={{
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//         minHeight: "50vh",
+//       }}
+//     >
+//       <CircularProgress />
+//     </Box>
+//   );
 
-//             {/* Error State */}
-//             {error && (
-//                 <div className="text-center text-red-600 bg-red-100 border border-red-400 p-4 rounded-md">
-//                     <p><strong>Error:</strong> {error}</p>
-//                 </div>
-//             )}
+//   return (
+//     <Container maxWidth="lg" sx={{ py: { xs: 2, md: 4 }, minHeight: "100vh" }}>
+//       <Box sx={{ mb: 4, textAlign: "center" }}>
+//         <Typography variant="h5" component="h1" gutterBottom>
+//           GitHub Repositories
+//         </Typography>
+//         <Typography variant="h6" color="text.secondary" component="p">
+//           from{" "}
+//           <Link
+//             href={`https://github.com/${username}`}
+//             target="_blank"
+//             rel="noopener noreferrer"
+//             sx={{
+//               fontFamily: "monospace",
+//               color: "primary.main",
+//               "&:hover": { textDecoration: "underline" },
+//             }}
+//           >
+//             {username}
+//           </Link>
+//         </Typography>
+//       </Box>
 
-//             {/* Success State - Display Repos */}
-//             {!loading && !error && (
-//                 <>
-//                     {repos.length === 0 ? (
-//                         <p className="text-center text-gray-500">No public repositories found for this user.</p>
-//                     ) : (
-//                         <ul className="space-y-4">
-//                             {repos.map((repo) => (
-//                                 <li key={repo.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow duration-200 bg-card text-card-foreground">
-//                                     <div className="flex justify-between items-start mb-2">
-//                                         <h2 className="text-xl font-semibold">
-//                                             <a
-//                                                 href={repo.html_url}
-//                                                 target="_blank"
-//                                                 rel="noopener noreferrer"
-//                                                 className="text-blue-600 hover:underline"
-//                                             >
-//                                                 {repo.name}
-//                                             </a>
-//                                         </h2>
-//                                         <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-//                                             {/* Stars */}
-//                                             <span title="Stars" className="flex items-center">
-//                                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-//                                                 {repo.stargazers_count}
-//                                             </span>
-//                                             {/* Forks */}
-//                                             <span title="Forks" className="flex items-center">
-//                                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8a6 6 0 0 0-12 0v2a6 6 0 0 0 6 6 4 4 0 0 0 4-4v-2m-6 6v4m0-10v-4"></path></svg>
-//                                                 {repo.forks_count}
-//                                             </span>
-//                                         </div>
-//                                     </div>
+//       {loading && Loader()}
 
-//                                     {/* Description */}
-//                                     {repo.description && (
-//                                         <p className="text-muted-foreground text-sm mb-3">
-//                                             {repo.description}
-//                                         </p>
-//                                     )}
+//       {error && (
+//         <Alert severity="error" sx={{ maxWidth: "md", mx: "auto", mt: 4 }}>
+//           <AlertTitle>Error Fetching Data</AlertTitle>
+//           {error} Please check the username or try again later.
+//         </Alert>
+//       )}
 
-//                                     {/* Topics */}
-//                                      {repo.topics && repo.topics.length > 0 && (
-//                                         <div className="mb-3 flex flex-wrap gap-1">
-//                                             {repo.topics.map(topic => (
-//                                                 <span key={topic} className="text-xs bg-secondary text-secondary-foreground px-2 py-0.5 rounded-full">
-//                                                     {topic}
-//                                                 </span>
-//                                             ))}
-//                                         </div>
-//                                      )}
+//       {!loading && !error && (
+//         <>
+//           {repos.length === 0 ? (
+//             <Typography
+//               variant="subtitle1"
+//               color="text.secondary"
+//               sx={{ textAlign: "center", mt: 10 }}
+//             >
+//               No public repositories found for this user.
+//             </Typography>
+//           ) : (
+//             <Grid container spacing={3}>
+//               {repos.map((repo) => (
+//                 <Grid size={{ xs: 12, sm: 6, md: 4 }} key={repo.id}>
+//                   <Card
+//                     sx={{
+//                       display: "flex",
+//                       flexDirection: "column",
+//                       height: "100%",
+//                     }}
+//                   >
+//                     <Link
+//                       href={repo.html_url}
+//                       target="_blank"
+//                       rel="noopener noreferrer"
+//                       underline="none"
+//                     >
+//                       <CardActionArea>
+//                         <CardHeader
+//                           title={
+//                             <Typography
+//                               variant="h6"
+//                               sx={{
+//                                 fontSize: "1.25rem",
+//                                 fontWeight: "medium",
+//                                 color: "text.primary",
+//                                 "&:hover": { color: "primary.main" },
+//                                 display: "block", // Ensure link takes up space for better clickability
+//                                 overflow: "hidden",
+//                                 textOverflow: "ellipsis",
+//                                 whiteSpace: "nowrap",
+//                               }}
+//                             >
+//                               {repo.name}
+//                             </Typography>
+//                           }
+//                           subheader={
+//                             repo.description ? (
+//                               <Typography
+//                                 variant="body2"
+//                                 color="text.secondary"
+//                                 title={repo.description}
+//                                 sx={{
+//                                   mt: 0.5,
+//                                   height: "40px",
+//                                   overflow: "hidden",
+//                                   textOverflow: "ellipsis",
+//                                   display: "-webkit-box",
+//                                   WebkitLineClamp: 2,
+//                                   WebkitBoxOrient: "vertical",
+//                                 }}
+//                               >
+//                                 {repo.description}
+//                               </Typography>
+//                             ) : (
+//                               <Box sx={{ height: "40px", mt: 0.5 }} />
+//                             )
+//                           }
+//                           action={
+//                             <Box
+//                               sx={{
+//                                 display: "flex",
+//                                 alignItems: "center",
+//                                 gap: { xs: 0.5, sm: 1 },
+//                                 color: "text.secondary",
+//                                 flexShrink: 0,
+//                                 mt: 0.5,
+//                               }}
+//                             >
+//                               <Box
+//                                 sx={{
+//                                   display: "flex",
+//                                   alignItems: "center",
+//                                   p: 0.5,
+//                                 }}
+//                                 title="Stars"
+//                               >
+//                                 <MdOutlineStarBorder />
+//                                 <Typography variant="body2" component="span">
+//                                   {repo.stargazers_count}
+//                                 </Typography>
+//                               </Box>
+//                               <Box
+//                                 sx={{
+//                                   display: "flex",
+//                                   alignItems: "center",
+//                                   p: 0.5,
+//                                 }}
+//                                 title="Forks"
+//                               >
+//                                 <MdAltRoute />
+//                                 <Typography variant="body2" component="span">
+//                                   {repo.forks_count}
+//                                 </Typography>
+//                               </Box>
+//                             </Box>
+//                           }
+//                           sx={{
+//                             alignItems: "flex-start",
+//                             pb: 0,
+//                             "& .MuiCardHeader-content": { overflow: "hidden" },
+//                           }}
+//                         />
+//                         <CardContent
+//                           sx={{
+//                             flexGrow: 1,
+//                             pt:
+//                               repo.description ||
+//                               (repo.topics && repo.topics.length > 0)
+//                                 ? 1
+//                                 : 2,
+//                             pb: "8px !important",
+//                           }}
+//                         >
+//                           {repo.topics && repo.topics.length > 0 && (
+//                             <Box
+//                               sx={{
+//                                 display: "flex",
+//                                 flexWrap: "wrap",
+//                                 gap: 0.75,
+//                                 mt: 1,
+//                               }}
+//                             >
+//                               {repo.topics.slice(0, 4).map((topic) => (
+//                                 <Chip
+//                                   key={topic}
+//                                   label={topic}
+//                                   size="small"
+//                                   variant="outlined"
+//                                 />
+//                               ))}
+//                               {repo.topics.length > 4 && (
+//                                 <Chip
+//                                   label="..."
+//                                   size="small"
+//                                   variant="outlined"
+//                                   title={repo.topics.slice(4).join(", ")}
+//                                 />
+//                               )}
+//                             </Box>
+//                           )}
+//                         </CardContent>
 
-//                                     {/* Language and Last Updated */}
-//                                     <div className="flex justify-between items-center text-xs text-muted-foreground">
-//                                         <span>
-//                                             {repo.language ? `Primary Language: ${repo.language}` : 'No language specified'}
-//                                         </span>
-//                                         <span>
-//                                             Last updated: {formatDate(repo.updated_at)}
-//                                         </span>
-//                                     </div>
-//                                 </li>
-//                             ))}
-//                         </ul>
-//                     )}
-//                 </>
-//             )}
-//         </div>
-//     );
+//                         <CardActions
+//                           sx={{
+//                             display: "flex",
+//                             justifyContent: "space-between",
+//                             alignItems: "center",
+//                             borderTop: "1px solid",
+//                             borderColor: "divider",
+//                             p: 2,
+//                             mt: "auto",
+//                           }}
+//                         >
+//                           <Box
+//                             sx={{
+//                               display: "flex",
+//                               alignItems: "center",
+//                               typography: "caption",
+//                               color: "text.secondary",
+//                               minHeight: "14.5px",
+//                             }}
+//                           >
+//                             {repo.language && (
+//                               <>
+//                                 <Box
+//                                   component="span"
+//                                   sx={{
+//                                     height: 10,
+//                                     width: 10,
+//                                     borderRadius: "50%",
+//                                     mr: 0.75,
+//                                     backgroundColor: getLanguageMuiColor(
+//                                       repo.language
+//                                     ),
+//                                   }}
+//                                 />
+//                                 {repo.language}
+//                               </>
+//                             )}
+//                           </Box>
+//                           <Typography variant="caption" color="text.secondary">
+//                             Updated: {formatDate(repo.updated_at)}
+//                           </Typography>
+//                         </CardActions>
+//                       </CardActionArea>
+//                     </Link>
+//                   </Card>
+//                 </Grid>
+//               ))}
+//             </Grid>
+//           )}
+//         </>
+//       )}
+//     </Container>
+//   );
 // };
 
 // export default GitHubReposPage;
 
+import React from "react";
+import { Container } from "@mui/material";
+import { PageHeader } from "@/components/repo/PageHeader";
+import { LoadingSpinner } from "@/components/repo/Loader";
+import { ErrorAlert } from "@/components/repo/Error";
+import { RepoGrid } from "@/components/repo/RepoGrid";
+import { useGitHubRepos } from "@/hooks/useGitRepos";
 
-
-
-
-
-
-
-
-
-
-// src/components/GitHubReposPage.tsx
-import React, { useState, useEffect } from 'react';
-import { Star, GitFork, AlertTriangle } from 'lucide-react';
-
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"; // Assuming shadcn/ui components are aliased to @/components/ui
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-
-interface GitHubRepo {
-    id: number;
-    name: string;
-    full_name: string;
-    html_url: string;
-    description: string | null;
-    language: string | null;
-    stargazers_count: number;
-    forks_count: number;
-    updated_at: string;
-    topics: string[];
-}
+import { DEFAULT_GIT_USERNAME } from "@/config/personal_data";
 
 interface GitHubReposPageProps {
-    username?: string;
+  username?: string;
 }
 
-const DEFAULT_USERNAME = 'gaurisankartarasia';
+const GitHubReposPage: React.FC<GitHubReposPageProps> = ({
+  username = DEFAULT_GIT_USERNAME,
+}) => {
+  const { repos, loading, error } = useGitHubRepos(username);
 
-const GitHubReposPage: React.FC<GitHubReposPageProps> = ({ username = DEFAULT_USERNAME }) => {
-    const [repos, setRepos] = useState<GitHubRepo[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+  return (
+    <Container maxWidth="lg" sx={{ minHeight: "100vh" }}>
+      <PageHeader username={username} />
 
-    useEffect(() => {
-        setLoading(true);
-        setError(null);
-        setRepos([]);
-
-        fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`)
-            .then((response) => {
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        throw new Error(`GitHub user "${username}" not found.`);
-                    }
-                    throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
-                }
-                return response.json() as Promise<GitHubRepo[]>;
-            })
-            .then((data) => {
-                setRepos(data);
-                setLoading(false);
-            })
-            .catch((fetchError: unknown) => {
-                console.error('Error fetching GitHub repositories:', fetchError);
-                if (fetchError instanceof Error) {
-                    setError(fetchError.message);
-                } else {
-                    setError("An unknown error occurred while fetching repositories.");
-                }
-                setLoading(false);
-            });
-    }, [username]);
-
-    const formatDate = (dateString: string): string => {
-        try {
-            return new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric',
-            }).format(new Date(dateString));
-        } catch (e) {
-            return dateString;
-        }
-    };
-
-    const renderSkeletons = () => (
-        <div className="space-y-4">
-            {[...Array(5)].map((_, index) => (
-                 <Card key={index} className="w-full ">
-                    <CardHeader>
-                        <div className="flex justify-between items-center">
-                            <Skeleton className="h-6 w-1/2" />
-                            <div className="flex space-x-4">
-                                <Skeleton className="h-5 w-12" />
-                                <Skeleton className="h-5 w-12" />
-                            </div>
-                        </div>
-                         <Skeleton className="h-4 w-full mt-2" />
-                         <Skeleton className="h-4 w-3/4 mt-1" />
-                    </CardHeader>
-                    <CardContent>
-                         <div className="flex flex-wrap gap-2 mb-4">
-                            <Skeleton className="h-5 w-16 rounded-full" />
-                            <Skeleton className="h-5 w-20 rounded-full" />
-                            <Skeleton className="h-5 w-14 rounded-full" />
-                        </div>
-                    </CardContent>
-                    <CardFooter className="flex justify-between text-xs text-muted-foreground">
-                       <Skeleton className="h-4 w-32" />
-                       <Skeleton className="h-4 w-40" />
-                    </CardFooter>
-                </Card>
-            ))}
-        </div>
-    );
-
-    return (
-        <div className="container mx-auto p-4 md:p-8 min-h-screen bg-background text-foreground">
-            <div className="mb-8 text-center">
-                
-                <p className="text-xl text-muted-foreground mt-2">
-                    Repositories from <a href={`https://github.com/${username}`} target="_blank" rel="noopener noreferrer" className="font-mono text-primary hover:underline hover:text-blue-600 underline-offset-4">{username}</a>
-                </p>
-            </div>
-
-            {loading && renderSkeletons()}
-
-            {error && (
-                <Alert variant="destructive" className="max-w-xl mx-auto">
-                    <AlertTriangle className="h-4 w-4" />
-                    <AlertTitle>Error Fetching Data</AlertTitle>
-                    <AlertDescription>
-                       {error} Please check the username or try again later.
-                    </AlertDescription>
-                </Alert>
-            )}
-
-            {!loading && !error && (
-                <>
-                    {repos.length === 0 ? (
-                        <p className="text-center text-muted-foreground text-lg mt-10">
-                            No public repositories found for this user.
-                        </p>
-                    ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {repos.map((repo) => (
-                                <Card key={repo.id} className="flex flex-col shadow-lg justify-between  transition-shadow duration-300 ease-in-out border-border/60">
-                                    <CardHeader>
-                                        <div className="flex justify-between items-start">
-                                            <CardTitle className="text-xl">
-                                                <a
-                                                    href={repo.html_url}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="hover:text-primary hover:underline underline-offset-4 hover:text-blue-600 transition-colors"
-                                                >
-                                                    {repo.name}
-                                                </a>
-                                            </CardTitle>
-                                             <div className="flex items-center space-x-3 text-sm text-muted-foreground shrink-0">
-                                                <span title="Stars" className="flex items-center">
-                                                    <Star className="h-4 w-4 mr-1 text-yellow-500" />
-                                                    {repo.stargazers_count}
-                                                </span>
-                                                <span title="Forks" className="flex items-center">
-                                                    <GitFork className="h-4 w-4 mr-1 text-green-600" />
-                                                    {repo.forks_count}
-                                                </span>
-                                            </div>
-                                        </div>
-                                         {repo.description && (
-                                            <CardDescription className="pt-2 text-sm h-10 overflow-hidden text-ellipsis">
-                                                {repo.description}
-                                            </CardDescription>
-                                        )}
-                                    </CardHeader>
-                                    <CardContent className="flex-grow">
-                                        {repo.topics && repo.topics.length > 0 && (
-                                            <div className="mb-4 flex flex-wrap gap-2">
-                                                {repo.topics.slice(0, 4).map(topic => (
-                                                    <Badge key={topic} variant="secondary" className="font-normal">
-                                                        {topic}
-                                                    </Badge>
-                                                ))}
-                                                {repo.topics.length > 4 && (
-                                                    <Badge variant="outline">...</Badge>
-                                                )}
-                                            </div>
-                                        )}
-                                    </CardContent>
-                                     <CardFooter className="flex justify-between items-center text-xs text-muted-foreground border-t pt-4">
-                                        <div className="flex items-center">
-                                            {repo.language && (
-                                                <>
-                                                    <span className={`h-3 w-3 rounded-full mr-1.5 ${getLanguageColor(repo.language)}`}></span>
-                                                    <span>{repo.language}</span>
-                                                </>
-                                            )}
-                                        </div>
-                                        <span>
-                                            Updated: {formatDate(repo.updated_at)}
-                                        </span>
-                                    </CardFooter>
-                                </Card>
-                            ))}
-                        </div>
-                    )}
-                </>
-            )}
-        </div>
-    );
-};
-
-// Simple helper for language colors (can be expanded)
-const getLanguageColor = (language: string): string => {
-    const colors: { [key: string]: string } = {
-        'TypeScript': 'bg-blue-500',
-        'JavaScript': 'bg-yellow-500',
-        'Python': 'bg-green-600',
-        'Java': 'bg-orange-500',
-        'HTML': 'bg-red-600',
-        'CSS': 'bg-purple-600',
-        'Go': 'bg-cyan-500',
-        'Rust': 'bg-orange-700',
-        'Shell': 'bg-lime-600'
-    };
-    return colors[language] || 'bg-gray-500';
+      {loading && <LoadingSpinner />}
+      {error && <ErrorAlert error={error} />}
+      {!loading && !error && <RepoGrid repos={repos} />}
+    </Container>
+  );
 };
 
 export default GitHubReposPage;

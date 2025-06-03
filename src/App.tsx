@@ -1,7 +1,8 @@
-// import { useState } from 'react'
+// src/App.tsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar.tsx";
+import Navbar from "./components/navigation/index.tsx";
 import FrontPage from "./pages/Hero.tsx";
+import Projects from "./pages/projects.tsx";
 
 import GitHubReposPage from "./pages/Repos.tsx";
 import "./App.css";
@@ -11,15 +12,13 @@ function App() {
     <>
       <BrowserRouter>
         <Navbar />
- <main className="pt-8">
-        <Routes>
-         
-          <Route path="/" element={<FrontPage />} />
-
-          <Route path="/git_repos" element={<GitHubReposPage />} />
-        </Routes>
-       
-        </main>
+        <main className="pt-8">
+          <Routes>
+            <Route path="/" element={<FrontPage />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/git_repos" element={<GitHubReposPage />} />
+          </Routes>
+        </main>{" "}
       </BrowserRouter>
     </>
   );
